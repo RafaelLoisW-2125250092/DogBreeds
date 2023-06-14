@@ -2,6 +2,7 @@ package com.example.dogbreeds.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,29 +51,38 @@ public class TambahActivity extends AppCompatActivity {
                     etDeskripsi.setError("Deskripsi Tidak Boleh Kosong");
                 }
                 else {
-                    dogsadd();
+                    dogsAdd();
                 }
             }
         });
     }
 
-    private void dogsadd(){
-        APIRequestData ARD = RetroServer.konekRetrofit().create(APIRequestData.class);
-        Call<Root> proses = ARD.ardCreate(nama, foto, ukuran, deskripsi);
 
-        proses.enqueue(new Callback<Root>() {
+    private void dogsAdd() {
+        APIRequestData apiRequestData = RetroServer.konekRetrofit().create(APIRequestData.class);
+        Call<Root> call = apiRequestData.ardCreate(nama, foto, ukuran, deskripsi);
+
+        call.enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
-                String kode = String.valueOf(response.body().getKode());
-                String pesan = response.body().getPesan();
-
-                Toast.makeText(TambahActivity.this, "Kode" + kode + "Pesan : " + pesan, Toast.LENGTH_SHORT).show();
-                finish();
+                if (response.isSuccessful()) {
+                    Root root = response.body();
+                    if (root != null) {
+                        String kode = String.valueOf(root.getKode());
+                        String pesan = root.getPesan();
+                        Toast.makeText(TambahActivity.this, "Kode: " + kode + ", Pesan: " + pesan, Toast.LENGTH_SHORT).show();
+                        finish();
+                        Intent intent = new Intent(TambahActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                } else {
+                    Toast.makeText(TambahActivity.this, "Gagal menambahkan data", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
-                Toast.makeText(TambahActivity.this, "Gagal Menghubungi Server : " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(TambahActivity.this, "Gagal Menghubungi Server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

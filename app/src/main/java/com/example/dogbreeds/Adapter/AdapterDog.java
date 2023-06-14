@@ -68,12 +68,7 @@ public class AdapterDog extends RecyclerView.Adapter<AdapterDog.VHDogBreeds>{
 
     @Override
     public int getItemCount() {
-        if (listdogbreeds.isEmpty()) {
-
-        }else {
-            return listdogbreeds.size();
-        }
-        return 0;
+        return listdogbreeds.size();
     }
 
 

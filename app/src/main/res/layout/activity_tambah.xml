@@ -21,7 +21,7 @@
         android:id="@+id/et_nama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" Nama Jenis Anjing"
+        android:hint="Nama Jenis Anjing"
         android:textSize="21sp"/>
 
     <EditText
