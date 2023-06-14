@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_margin="6dp"
+    tools:context=".Activity.TambahActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Dog Breeds"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"/>
+
+    <EditText
+        android:id="@+id/et_nama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=" Nama Jenis Anjing"
+        android:textSize="21sp"/>
+
+    <EditText
+        android:id="@+id/et_foto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Foto"
+        android:textSize="21sp"/>
+
+    <EditText
+        android:id="@+id/et_ukuran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ukuran"
+        android:textSize="21sp"/>
+
+    <EditText
+        android:id="@+id/et_deskripsi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Deskripsi"
+        android:textSize="21sp"/>
+
+    <Button
+        android:id="@+id/btn_tambah"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Tambah"
+        android:layout_marginTop="16dp"
+        android:textSize="21sp"
+        />
+
+</LinearLayout>
+
+
