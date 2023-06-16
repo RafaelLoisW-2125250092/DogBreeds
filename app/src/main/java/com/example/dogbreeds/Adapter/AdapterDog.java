@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,10 +34,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdapterDog extends RecyclerView.Adapter<AdapterDog.VHDogBreeds>{
+public class AdapterDog extends RecyclerView.Adapter<AdapterDog.VHDogBreeds> {
     //private final List<Datum> listdogbreeds;
     private Context ctx;
     private final List<Datum> listdogbreeds;
+
+    private int lastAnimatedPosition = -1;
 
     public AdapterDog(Context ctx, List<Datum> listdogbreeds) {
         this.ctx = ctx;
@@ -62,9 +66,26 @@ public class AdapterDog extends RecyclerView.Adapter<AdapterDog.VHDogBreeds>{
         holder.tvpathFoto.setText(D.getFoto());
         Glide.with(holder.itemView.getContext())
                 .load(D.getFoto())
-                .apply(new RequestOptions().override(350,550))
+                .apply(new RequestOptions().override(350, 550))
                 .into(holder.ivGambar);
+
+        setAnimation(holder.itemView, position);
     }
+
+
+    private void setAnimation(View viewToAnimate, int position) {
+        if (position > lastAnimatedPosition) {
+            Animation animation;
+            if (position % 2 == 0) {
+                animation = AnimationUtils.loadAnimation(ctx, R.anim.slide_in_right);
+            } else {
+                animation = AnimationUtils.loadAnimation(ctx, R.anim.slide_in_left);
+            }
+            viewToAnimate.startAnimation(animation);
+            lastAnimatedPosition = position;
+        }
+    }
+
 
     @Override
     public int getItemCount() {
@@ -72,8 +93,7 @@ public class AdapterDog extends RecyclerView.Adapter<AdapterDog.VHDogBreeds>{
     }
 
 
-
-    public class VHDogBreeds extends RecyclerView.ViewHolder{
+    public class VHDogBreeds extends RecyclerView.ViewHolder {
         TextView tvId, tvpathFoto, tvNama, tvUkuran, tvDeskripsi;
         ImageView ivGambar;
 
@@ -138,7 +158,8 @@ public class AdapterDog extends RecyclerView.Adapter<AdapterDog.VHDogBreeds>{
                 }
             });
         }
-        private void hapusBreeds(String idBreeds){
+
+        private void hapusBreeds(String idBreeds) {
             APIRequestData ARD = RetroServer.konekRetrofit().create(APIRequestData.class);
             Call<Root> proses = ARD.ardDelete(idBreeds);
 
@@ -149,7 +170,7 @@ public class AdapterDog extends RecyclerView.Adapter<AdapterDog.VHDogBreeds>{
                     String pesan = response.body().getPesan();
 
                     Toast.makeText(ctx, "Kode: " + kode + "Pesan: " + pesan, Toast.LENGTH_SHORT).show();
-                    ((MainActivity)ctx).retrieveDogBreeds();
+                    ((MainActivity) ctx).retrieveDogBreeds();
                 }
 
                 @Override

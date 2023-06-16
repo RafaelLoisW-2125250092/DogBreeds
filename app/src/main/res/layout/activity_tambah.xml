@@ -14,13 +14,24 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:textSize="25sp"
+        android:fontFamily="@font/poppins_medium"
+
         android:textStyle="bold"
         android:layout_marginBottom="32dp"/>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/paws1"
+        android:layout_gravity="center_horizontal"
+        />
 
     <EditText
         android:id="@+id/et_nama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+
         android:hint="Nama Jenis Anjing"
         android:textSize="21sp"/>
 
@@ -28,6 +39,8 @@
         android:id="@+id/et_foto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+
         android:hint="Foto"
         android:textSize="21sp"/>
 
@@ -35,6 +48,8 @@
         android:id="@+id/et_ukuran"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+
         android:hint="Ukuran"
         android:textSize="21sp"/>
 
@@ -42,13 +57,18 @@
         android:id="@+id/et_deskripsi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+
         android:hint="Deskripsi"
         android:textSize="21sp"/>
 
     <Button
         android:id="@+id/btn_tambah"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:textAllCaps="false"
+        android:background="@drawable/shapebutton"
         android:text="Tambah"
         android:layout_marginTop="16dp"
         android:textSize="21sp"

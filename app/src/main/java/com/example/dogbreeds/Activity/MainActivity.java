@@ -1,12 +1,16 @@
 package com.example.dogbreeds.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -47,41 +51,29 @@ public class MainActivity extends AppCompatActivity {
 
         if(KL.isLogin(KL.keySP_username)== true){
             rvDogBreeds = findViewById(R.id.rv_dogbreeds);
-            fabTambah = findViewById(R.id.fab_tambah);
+
             pbDogBreeds = findViewById(R.id.pb_dogbreeds);
-            fabLogout = findViewById(R.id.fab_logout);
+
             tvWelcome = findViewById(R.id.tv_welcome);
 
             lmDogBreeds = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             rvDogBreeds.setLayoutManager(lmDogBreeds);
             tvWelcome.setText("Selamat Datang " + KL.getPref(KL.keySP_nama_lengkap));
-
-            fabTambah.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, TambahActivity.class));
-                    finish();
-                }
-            });
-
-            fabLogout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    KL.setPref(KL.keySP_username, null);
-                    KL.setPref(KL.keySP_nama_lengkap,null);
-                    KL.setPref(KL.keySP_email, null);
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
-                }
-            });
-
-
         }else {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
             finish();
         }
 
+
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(300);
+        itemAnimator.setChangeDuration(300);
+        itemAnimator.setMoveDuration(300);
+        itemAnimator.setRemoveDuration(300);
+        rvDogBreeds.setItemAnimator(itemAnimator);
+
+        pbDogBreeds.setVisibility(View.GONE);
 
     }
 
@@ -117,5 +109,37 @@ public class MainActivity extends AppCompatActivity {
                 pbDogBreeds.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_option, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (!KL.isLogin(KL.keySP_username) == true){
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        }
+        else if(KL.isLogin(KL.keySP_username)== true) {
+            switch (item.getItemId()) {
+                case R.id.menu_tambah:
+                    startActivity(new Intent(MainActivity.this, TambahActivity.class));
+                    finish();
+                    break;
+                case R.id.menu_logout:
+                    KL.setPref(KL.keySP_username, null);
+                    KL.setPref(KL.keySP_nama_lengkap, null);
+                    KL.setPref(KL.keySP_email, null);
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
+                    break;
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
